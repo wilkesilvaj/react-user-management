@@ -11,10 +11,10 @@ const userList = [
 function App() {
   return (
     <div className="App container-fluid">
-      <div className='container'>
+      <div className='container my-4'>
         <NewUser />        
       </div>
-      <div className='container'>
+      <div className='container my-4'>
         <UserList  users={userList} />
       </div>
     </div>
