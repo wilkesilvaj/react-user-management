@@ -1,10 +1,10 @@
 import classes from "./User.module.css";
 const User = (props) => {
   return (
-    <div>
+    <div className="card">
       <div>
         <p>
-          <strong>{props.name}</strong>({props.age})
+          <strong>{props.username}</strong>({props.age})
         </p>
       </div>
     </div>
