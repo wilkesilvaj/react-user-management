@@ -12,6 +12,7 @@ const UserForm = (props) => {
     };
 
     console.log(newUser);
+    props.onSaveUserData(newUser);
     setUsername("");
     setAge("");
   };
