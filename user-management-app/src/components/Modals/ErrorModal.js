@@ -1,9 +1,10 @@
 import classes from "./ErrorModal.module.css";
 import Card from "../UI/Card";
-import Wrapper from "../Helper/Wrapper";
+// import Wrapper from "../Helper/Wrapper";
+import React from "react";
 const ErrorModal = (props) => {
   return (
-    <Wrapper>
+    <React.Fragment>
       <div className={classes.backdrop} onClick={props.onClose}>
         <Card className={classes.modal}>
           <header className={classes.header}>
@@ -17,7 +18,7 @@ const ErrorModal = (props) => {
           </footer>
         </Card>
       </div>
-    </Wrapper>
+    </React.Fragment>
   );
 };
 
