@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ErrorModal from "../Modals/ErrorModal";
 const UserForm = (props) => {
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
   const [error, setError] = useState();
 
   const errorResetHandler = () => {
     setError(null);
-  }
+  };
 
   const submitFormHandler = (event) => {
     event.preventDefault();
 
-    if (username.trim().length === 0 || age.trim().length === 0) {
+    const inputName = nameInputRef.current.value;
+    const inputAge = ageInputRef.current.value;
+    if (inputName.trim().length === 0 || inputAge.trim().length === 0) {
       setError({
         title: "Invalid Data",
         message: "Please enter a valid username and age (non-empty values).",
@@ -20,7 +22,7 @@ const UserForm = (props) => {
 
       return;
     }
-    if (+age < 0) {
+    if (+inputAge < 0) {
       setError({
         title: "Invalid Age",
         message: "Please enter a valid age (positive integer value).",
@@ -29,29 +31,26 @@ const UserForm = (props) => {
     }
 
     const newUser = {
-      username: username,
-      age: age,
+      username: inputName,
+      age: inputAge,
       id: Math.random().toString(),
     };
 
-    console.log(newUser);
     props.onSaveUserData(newUser);
-    setUsername("");
-    setAge("");
-  };
-
-  const inputUsernameHandler = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const inputAgeHandler = (event) => {
-    setAge(event.target.value);
+    nameInputRef.current.value = "";
+    ageInputRef.current.value = "";
   };
 
   return (
     <div className="text-start">
       {/* The following will display the error modal only if an "error" object exists */}
-      {error && <ErrorModal title={error.title} message={error.message} onClose={errorResetHandler} />}
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onClose={errorResetHandler}
+        />
+      )}
       <div>
         <form action="" className="form">
           <h2>Add User Form</h2>
@@ -65,8 +64,7 @@ const UserForm = (props) => {
                 type="text"
                 name="username"
                 id="username"
-                onInput={inputUsernameHandler}
-                value={username}
+                ref={nameInputRef}
               />
             </div>
             <div className="col-12 col-md-6 mb-2">
@@ -78,8 +76,7 @@ const UserForm = (props) => {
                 type="number"
                 name="age"
                 id="age"
-                onInput={inputAgeHandler}
-                value={age}
+                ref={ageInputRef}
               />
             </div>
           </div>
